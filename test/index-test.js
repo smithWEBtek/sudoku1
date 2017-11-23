@@ -1,82 +1,38 @@
-describe('index', function() {
-  describe('`countdown` function', function () {
-    before(function() {
-      let useFakeTimers = null;
 
-      if (typeof sinon === 'undefined') {
-        useFakeTimers = require('sinon').useFakeTimers;
-      } else {
-        useFakeTimers = sinon.useFakeTimers;
-      }
+describe('doneOrNot', function () {
+  const board1 = [
+    [5, 3, 4, 6, 7, 8, 9, 1, 2], 
+    [6, 7, 2, 1, 9, 5, 3, 4, 8],
+    [1, 9, 8, 3, 4, 2, 5, 6, 7],
+    [8, 5, 9, 7, 6, 1, 4, 2, 3],
+    [4, 2, 6, 8, 5, 3, 7, 9, 1],
+    [7, 1, 3, 9, 2, 4, 8, 5, 6],
+    [9, 6, 1, 5, 3, 7, 2, 8, 4],
+    [2, 8, 7, 4, 1, 9, 6, 3, 5],
+    [3, 4, 5, 2, 8, 6, 1, 7, 9]
+  ]
+           
+  const board2 = [
+    [5, 3, 4, 6, 7, 8, 9, 1, 2], 
+    [6, 7, 2, 1, 9, 0, 3, 4, 9],
+    [1, 0, 0, 3, 4, 2, 5, 6, 0],
+    [8, 5, 9, 7, 6, 1, 0, 2, 0],
+    [4, 2, 6, 8, 5, 3, 7, 9, 1],
+    [7, 1, 3, 9, 2, 4, 8, 5, 6],
+    [9, 0, 1, 5, 3, 7, 2, 1, 4],
+    [2, 8, 7, 4, 1, 9, 6, 3, 5],
+    [3, 0, 0, 4, 8, 1, 1, 7, 9]
+  ]
+  // it('Valid Sudoku board should return "Finished!"', () =>  {
+  //   expect(doneOrNot(board1)).toEqual("Finished!");
+  // });
 
-      this.clock = useFakeTimers();
-    })
-
-    after(function() {
-      this.clock.restore();
-    });
-
-    it('should exist', function () {
-      expect(countdown).toExist()
-    });
-
-    it('should have call the given callback function after two seconds', function() {
-      const spy = expect.createSpy();
-      countdown(spy);
-
-      expect(spy).toNotHaveBeenCalled();
-
-      this.clock.tick(2001);
-
-      expect(spy).toHaveBeenCalled();
-    });
+  it('First row should be valid Sudoku, numbers 1-9 only, no repeats and no zeros', function () {
+    expect(doneOrNot(board1[0]).sort().join('')).toEqual("123456789");
   });
-
-  describe('`createMultiplier` function', function () {
-    it('should exist', function () {
-      expect(createMultiplier).toExist();
-    });
-
-    it('should return a function', function () {
-      const doubler = createMultiplier(2);
-      expect(doubler).toBeA('function');
-    });
-
-    it('should multiply a given value using the created multiplier', function () {
-      const doubler = createMultiplier(2);
-      expect(doubler(5)).toEqual(10);
-    });
-  });
-
-  describe('Multiplier functions created with `createMultiplierBonus`', function () {
-    it('should have a doubler function', function () {
-      expect(doubler).toExist();
-      expect(doubler).toBeA('function');
-      expect(doubler(5)).toEqual(10);
-    });
-
-    it('should have a tripler function', function () {
-      expect(tripler).toExist();
-      expect(tripler).toBeA('function');
-      expect(tripler(5)).toEqual(15);
-    });
-  });
-
-  describe('`multiplier()` with partial application', function () {
-    it('should exist', function () {
-      expect(multiplier).toExist();
-    });
-
-    it('should have a doubler function created using `.bind()`', function () {
-      if (typeof server !== 'undefined' && server && !hasUsedBind) {
-        throw new Error("No cheating! Make sure to use `.bind()` for this solution!");
-      }
-
-      expect(doublerWithBind).toExist();
-      expect(doublerWithBind).toBeA('function');
-
-      expect(triplerWithBind).toExist();
-      expect(triplerWithBind).toBeA('function');
-    });
-  });
+  // it('Invalid Sudoku board should return "Try again!"', function () {
+  //   expect(doneOrNot(board2)).toEqual("Try again!");
+  // });
 });
+
+ 
